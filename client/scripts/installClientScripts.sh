@@ -7,5 +7,5 @@ wget -O $dir/linux.sh https://raw.githubusercontent.com/supermitsuba/StatsServic
 wget -O $dir/memory.sh https://raw.githubusercontent.com/supermitsuba/StatsService/master/client/scripts/memory.sh 
 wget -O $dir/temperature.sh https://raw.githubusercontent.com/supermitsuba/StatsService/master/client/scripts/temperature.sh 
 wget -O $dir/uptime.sh https://raw.githubusercontent.com/supermitsuba/StatsService/master/client/scripts/uptime.sh 
-wget -O $dir/uptime.sh https://raw.githubusercontent.com/supermitsuba/StatsService/master/client/scripts/process.sh 
+wget -O $dir/process.sh https://raw.githubusercontent.com/supermitsuba/StatsService/master/client/scripts/process.sh 
 chmod +x $dir/*.sh
