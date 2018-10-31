@@ -16,9 +16,25 @@ const mysqlConfig = {
 const pool = mysql.createPool(mysqlConfig)
 
 app.get('/metrics', (req, res) => {
-    var parameters = [req.query.type, req.query.name, req.body.limit]
-    var statement = 'SELECT * FROM iot.stats where type=? and nameOfMachine=? order by createdTimestamp desc limit ?';
-    executeQuery(statement, parameters, 
+    var statement = 'SELECT * FROM iot.stats where type='+pool.escape(req.query.type)+
+                ' and nameOfMachine='+pool.escape(req.query.name)+
+                ' order by createdTimestamp desc limit 60'
+    executeQuery(statement, null, 
+        (data) => {
+            res.set("Connection", "close")
+            res.send(data.splice(0, req.query.limit))
+            res.end()
+        }, (error) => {
+            console.log(error)
+            res.set("Connection", "close")
+            res.send('ok')
+            res.end()
+    })
+})
+
+app.get('/metrics/names', (req, res) => {
+    var statement = 'select DISTINCT nameOfMachine from stats';
+    executeQuery(statement, null, 
         (data) => {
             res.set("Connection", "close")
             res.send(data)
@@ -26,11 +42,12 @@ app.get('/metrics', (req, res) => {
         }, (error) => {
             console.log(error)
             res.set("Connection", "close")
-            res.sendStatus(500).send('ok').end()
+            res.send('ok')
+            res.end()
     })
 })
 
-app.get('/metrics/type', (req, res) => {
+app.get('/metrics/types', (req, res) => {
     var statement = 'select DISTINCT type from stats';
     executeQuery(statement, null, 
         (data) => {
@@ -40,7 +57,8 @@ app.get('/metrics/type', (req, res) => {
         }, (error) => {
             console.log(error)
             res.set("Connection", "close")
-            res.sendStatus(500).send('ok').end()
+            res.send('ok')
+            res.end()
     })
 })
 
@@ -56,7 +74,9 @@ app.post('/stat', (req, res) => {
         }, (error) => {
             console.log(error)
             res.set("Connection", "close")
-            res.sendStatus(500).send('ok').end()
+            res.sendStatus(500)
+            res.send('ok')
+            res.end()
     })
 })
 
