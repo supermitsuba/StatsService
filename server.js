@@ -15,6 +15,34 @@ const mysqlConfig = {
 }
 const pool = mysql.createPool(mysqlConfig)
 
+app.get('/metrics', (req, res) => {
+    var parameters = [req.query.type, req.query.name, req.body.limit]
+    var statement = 'SELECT * FROM iot.stats where type=? and nameOfMachine=? order by createdTimestamp desc limit ?';
+    executeQuery(statement, parameters, 
+        (data) => {
+            res.set("Connection", "close")
+            res.send(data)
+            res.end()
+        }, (error) => {
+            console.log(error)
+            res.set("Connection", "close")
+            res.sendStatus(500).send('ok').end()
+    })
+})
+
+app.get('/metrics/type', (req, res) => {
+    var statement = 'select DISTINCT type from stats';
+    executeQuery(statement, null, 
+        (data) => {
+            res.set("Connection", "close")
+            res.send(data)
+            res.end()
+        }, (error) => {
+            console.log(error)
+            res.set("Connection", "close")
+            res.sendStatus(500).send('ok').end()
+    })
+})
 
 app.post('/stat', (req, res) => {
     var parameters = [req.body.type, req.body.value, req.body.dateOfOccurance, req.body.nameOfMachine]
@@ -28,8 +56,7 @@ app.post('/stat', (req, res) => {
         }, (error) => {
             console.log(error)
             res.set("Connection", "close")
-            res.send('ok')
-            res.end()
+            res.sendStatus(500).send('ok').end()
     })
 })
 
