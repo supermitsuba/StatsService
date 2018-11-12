@@ -1,0 +1,97 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Stats
+  </h1>
+</div>
+<span class="nobreak">
+<div style="width: 40%;">
+  <h1>CPU Load:</h1>
+  <h2>VM1</h2>
+  <canvas
+      baseChart
+      [chartType]="'line'"
+      [datasets]="chartData"
+      [labels]="chartLabels"
+      [options]="chartOptions"
+      [legend]="true"
+      (chartClick)="onChartClick($event)">
+  </canvas>
+  <h2>VM2</h2>
+  <canvas
+  baseChart
+  [chartType]="'line'"
+  [datasets]="chartData"
+  [labels]="chartLabels"
+  [options]="chartOptions"
+  [legend]="true"
+  (chartClick)="onChartClick($event)">
+</canvas>
+<h2>VM3</h2>
+<canvas
+baseChart
+[chartType]="'line'"
+[datasets]="chartData"
+[labels]="chartLabels"
+[options]="chartOptions"
+[legend]="true"
+(chartClick)="onChartClick($event)">
+</canvas>
+<h2>VM4</h2>
+<canvas
+baseChart
+[chartType]="'line'"
+[datasets]="chartData"
+[labels]="chartLabels"
+[options]="chartOptions"
+[legend]="true"
+(chartClick)="onChartClick($event)">
+</canvas>
+</div>
+</span>
+
+<span class="nobreak">
+<div style="width: 40%;">
+  <h1>Memory Usage:</h1>
+  <h2>VM1</h2>
+  <canvas
+      baseChart
+      [chartType]="'line'"
+      [datasets]="chartData"
+      [labels]="chartLabels"
+      [options]="chartOptions"
+      [legend]="true"
+      (chartClick)="onChartClick($event)">
+  </canvas>
+  <h2>VM2</h2>
+  <canvas
+  baseChart
+  [chartType]="'line'"
+  [datasets]="chartData"
+  [labels]="chartLabels"
+  [options]="chartOptions"
+  [legend]="true"
+  (chartClick)="onChartClick($event)">
+</canvas>
+<h2>VM3</h2>
+<canvas
+baseChart
+[chartType]="'line'"
+[datasets]="chartData"
+[labels]="chartLabels"
+[options]="chartOptions"
+[legend]="true"
+(chartClick)="onChartClick($event)">
+</canvas>
+<h2>VM4</h2>
+<canvas
+baseChart
+[chartType]="'line'"
+[datasets]="chartData"
+[labels]="chartLabels"
+[options]="chartOptions"
+[legend]="true"
+(chartClick)="onChartClick($event)">
+</canvas>
+</div>
+</span>
