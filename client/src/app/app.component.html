@@ -4,94 +4,15 @@
     Stats
   </h1>
 </div>
-<span class="nobreak">
-<div style="width: 40%;">
-  <h1>CPU Load:</h1>
-  <h2>VM1</h2>
-  <canvas
-      baseChart
-      [chartType]="'line'"
-      [datasets]="chartData"
-      [labels]="chartLabels"
-      [options]="chartOptions"
-      [legend]="true"
-      (chartClick)="onChartClick($event)">
-  </canvas>
-  <h2>VM2</h2>
-  <canvas
-  baseChart
-  [chartType]="'line'"
-  [datasets]="chartData"
-  [labels]="chartLabels"
-  [options]="chartOptions"
-  [legend]="true"
-  (chartClick)="onChartClick($event)">
-</canvas>
-<h2>VM3</h2>
-<canvas
-baseChart
-[chartType]="'line'"
-[datasets]="chartData"
-[labels]="chartLabels"
-[options]="chartOptions"
-[legend]="true"
-(chartClick)="onChartClick($event)">
-</canvas>
-<h2>VM4</h2>
-<canvas
-baseChart
-[chartType]="'line'"
-[datasets]="chartData"
-[labels]="chartLabels"
-[options]="chartOptions"
-[legend]="true"
-(chartClick)="onChartClick($event)">
-</canvas>
-</div>
-</span>
 
-<span class="nobreak">
-<div style="width: 40%;">
-  <h1>Memory Usage:</h1>
-  <h2>VM1</h2>
-  <canvas
-      baseChart
-      [chartType]="'line'"
-      [datasets]="chartData"
-      [labels]="chartLabels"
-      [options]="chartOptions"
-      [legend]="true"
-      (chartClick)="onChartClick($event)">
-  </canvas>
-  <h2>VM2</h2>
-  <canvas
-  baseChart
-  [chartType]="'line'"
-  [datasets]="chartData"
-  [labels]="chartLabels"
-  [options]="chartOptions"
-  [legend]="true"
-  (chartClick)="onChartClick($event)">
-</canvas>
-<h2>VM3</h2>
-<canvas
-baseChart
-[chartType]="'line'"
-[datasets]="chartData"
-[labels]="chartLabels"
-[options]="chartOptions"
-[legend]="true"
-(chartClick)="onChartClick($event)">
-</canvas>
-<h2>VM4</h2>
-<canvas
-baseChart
-[chartType]="'line'"
-[datasets]="chartData"
-[labels]="chartLabels"
-[options]="chartOptions"
-[legend]="true"
-(chartClick)="onChartClick($event)">
-</canvas>
-</div>
-</span>
+<mat-tab-group>
+  <mat-tab label="CPU">
+    <app-cpu-charts></app-cpu-charts>
+  </mat-tab>
+  <mat-tab label="CPU Temp">
+    <app-cpu-temp-charts></app-cpu-temp-charts>
+  </mat-tab>
+  <mat-tab label="Memory">
+    <app-memory-charts></app-memory-charts>
+  </mat-tab>
+</mat-tab-group>
