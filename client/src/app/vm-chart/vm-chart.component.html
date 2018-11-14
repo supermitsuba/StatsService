@@ -1,0 +1,22 @@
+<div style="width: 40%;">
+    <h2>CPU Load:</h2>
+    <canvas
+        baseChart
+        [chartType]="'line'"
+        [datasets]="cpuData"
+        [labels]="cpuLabel"
+        [options]="chartOptions"
+        [legend]="true"
+        (chartClick)="onChartClick($event)">
+    </canvas>
+    <h2>CPU Temp:</h2>
+    <canvas
+        baseChart
+        [chartType]="'line'"
+        [datasets]="cpuTempData"
+        [labels]="cpuTempLabel"
+        [options]="chartOptions"
+        [legend]="true"
+        (chartClick)="onChartClick($event)">
+    </canvas>
+</div>
