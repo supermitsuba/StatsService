@@ -1,11 +1,24 @@
 const express = require('express')
+const path = require('path')
 const mysql = require('mysql')
 const bodyParser = require('body-parser')
 
 const app = express()
 const port = 3000
+const allowedExt = [
+    '.js',
+    '.ico',
+    '.css',
+    '.png',
+    '.jpg',
+    '.woff2',
+    '.woff',
+    '.ttf',
+    '.svg',
+  ];
 
 app.use(bodyParser.json())
+app.use(express.static(__dirname + '/src'))
 
 const mysqlConfig = {
     host     : "localhost",
