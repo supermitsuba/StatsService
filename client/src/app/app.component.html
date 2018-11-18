@@ -6,16 +6,7 @@
 </div>
 
 <mat-tab-group>
-  <mat-tab label="CPU">
-    <app-cpu-charts></app-cpu-charts>
-  </mat-tab>
-  <mat-tab label="CPU Temp">
-    <app-cpu-temp-charts></app-cpu-temp-charts>
-  </mat-tab>
-  <mat-tab label="Memory">
-    <app-memory-charts></app-memory-charts>
-  </mat-tab>
-  <mat-tab label="VM1">
-    <app-vm-chart></app-vm-chart>
+  <mat-tab *ngFor="let tab of tabs" [label]="tab">
+      <app-vm-chart [name]="tab"></app-vm-chart>
   </mat-tab>
 </mat-tab-group>

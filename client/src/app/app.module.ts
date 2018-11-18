@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
 import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule }    from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CpuChartsComponent } from './cpu-charts/cpu-charts.component';
@@ -22,7 +23,8 @@ import { VmChartComponent } from './vm-chart/vm-chart.component';
     BrowserModule,
     ChartsModule,
     MatTabsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

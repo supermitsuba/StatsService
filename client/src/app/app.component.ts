@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MetricDataService } from './services/metric-data-service.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'client';
+  tabs = []
+
+  constructor(private service:MetricDataService) { }
+
+  ngOnInit() {
+    this.service.getNames().subscribe(computerNames => {
+      this.tabs = []
+      for(var i = 0; i < computerNames.length; i++) {
+        this.tabs.push(computerNames[i].nameOfMachine)
+      }
+    });
+  }
+
 }

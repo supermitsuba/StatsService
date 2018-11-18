@@ -1,3 +1,8 @@
+<div>
+  <div>IP: {{ip}}</div>
+  <div>Uptime: {{uptime}}</div>
+  <div>Version: {{version}}</div>
+</div>
 <div style="width: 40%;">
     <h2>CPU Load:</h2>
     <canvas
@@ -5,6 +10,26 @@
         [chartType]="'line'"
         [datasets]="cpuData"
         [labels]="cpuLabel"
+        [options]="chartOptions"
+        [legend]="true"
+        (chartClick)="onChartClick($event)">
+    </canvas>
+    <h2>Memory:</h2>
+    <canvas
+        baseChart
+        [chartType]="'line'"
+        [datasets]="memoryData"
+        [labels]="memoryLabel"
+        [options]="chartOptions"
+        [legend]="true"
+        (chartClick)="onChartClick($event)">
+    </canvas>
+    <h2>Number of Processes:</h2>
+    <canvas
+        baseChart
+        [chartType]="'line'"
+        [datasets]="numOfProcessData"
+        [labels]="numOfProcessLabel"
         [options]="chartOptions"
         [legend]="true"
         (chartClick)="onChartClick($event)">
