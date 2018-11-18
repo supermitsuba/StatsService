@@ -6,17 +6,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule }    from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { CpuChartsComponent } from './cpu-charts/cpu-charts.component';
-import { MemoryChartsComponent } from './memory-charts/memory-charts.component';
-import { CpuTempChartsComponent } from './cpu-temp-charts/cpu-temp-charts.component';
 import { VmChartComponent } from './vm-chart/vm-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CpuChartsComponent,
-    MemoryChartsComponent,
-    CpuTempChartsComponent,
     VmChartComponent
   ],
   imports: [
