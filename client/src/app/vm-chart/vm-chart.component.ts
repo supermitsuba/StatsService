@@ -34,7 +34,7 @@ export class VmChartComponent implements OnInit {
   lastTimestamp = "unavailable"
 
   chartOptions = {
-    responsive: true
+    responsive: false
   };
 
   constructor(private service:MetricDataService) {

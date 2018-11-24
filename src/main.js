@@ -561,7 +561,7 @@ var VmChartComponent = /** @class */ (function () {
         this.version = "unavailable";
         this.lastTimestamp = "unavailable";
         this.chartOptions = {
-            responsive: true
+            responsive: false
         };
     }
     VmChartComponent.prototype.ngOnInit = function () {
