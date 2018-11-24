@@ -500,7 +500,7 @@ var MetricDataService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "canvas {\n  height: 288px;\n  width: 576px;\n}\n"
 
 /***/ }),
 
