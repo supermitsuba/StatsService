@@ -42,15 +42,15 @@ export class VmChartComponent implements OnInit {
 
   ngOnInit() {
     this.service.getMetric(this.name, 'IP', '25').subscribe(metric => {
-      this.ip = metric != null && metric.length > 0 ? metric[metric.length-1].value : "unavailable"
+      this.ip = metric != null && metric.length > 0 ? metric[0].value : "unavailable"
     });
 
     this.service.getMetric(this.name, 'uptime', '25').subscribe(metric => {
-      this.uptime = metric != null && metric.length > 0 ? metric[metric.length-1].value : "unavailable"
+      this.uptime = metric != null && metric.length > 0 ? metric[0].value : "unavailable"
     });
 
     this.service.getMetric(this.name, 'LinuxVersion', '25').subscribe(metric => {
-      this.version = metric != null && metric.length > 0 ? metric[metric.length-1].value : "unavailable"
+      this.version = metric != null && metric.length > 0 ? metric[0].value : "unavailable"
     });
 
     this.service.getLastTimestamp(this.name).subscribe(metric => {

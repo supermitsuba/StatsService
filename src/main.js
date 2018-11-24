@@ -567,13 +567,13 @@ var VmChartComponent = /** @class */ (function () {
     VmChartComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.service.getMetric(this.name, 'IP', '25').subscribe(function (metric) {
-            _this.ip = metric != null && metric.length > 0 ? metric[metric.length - 1].value : "unavailable";
+            _this.ip = metric != null && metric.length > 0 ? metric[0].value : "unavailable";
         });
         this.service.getMetric(this.name, 'uptime', '25').subscribe(function (metric) {
-            _this.uptime = metric != null && metric.length > 0 ? metric[metric.length - 1].value : "unavailable";
+            _this.uptime = metric != null && metric.length > 0 ? metric[0].value : "unavailable";
         });
         this.service.getMetric(this.name, 'LinuxVersion', '25').subscribe(function (metric) {
-            _this.version = metric != null && metric.length > 0 ? metric[metric.length - 1].value : "unavailable";
+            _this.version = metric != null && metric.length > 0 ? metric[0].value : "unavailable";
         });
         this.service.getLastTimestamp(this.name).subscribe(function (metric) {
             _this.lastTimestamp = metric != null && metric.length > 0 ? _this.convertDateTime(metric[0].max) : "unavailable";
