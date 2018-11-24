@@ -3,6 +3,7 @@ import { HttpClient }    from '@angular/common/http';
 import { MachineName } from '../models/machine-name';
 import { MetricType } from '../models/metric-type';
 import { Metric } from '../models/metric';
+import { LastHeartbeat } from '../models/last-heartbeat';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class MetricDataService {
   /// {baseUrl}/metrics/types
   getTypes() {
     return this.http.get<MetricType[]>(`${this.baseUrl}/metrics/types`);
+  }
+
+  getLastTimestamp(computerName) {
+    return this.http.get<LastHeartbeat[]>(`${this.baseUrl}/metrics/${computerName}/lastTimestamp`);
   }
 
   /// {baseUrl}/metrics/names

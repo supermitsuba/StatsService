@@ -75,6 +75,21 @@ app.get('/metrics/types', (req, res) => {
     })
 })
 
+app.get('/metrics/:value/lastTimestamp', (req, res) => {
+    var statement = 'select MAX(createdTimestamp) as \'max\' from stats where nameOfMachine = '+ pool.escape(req.params.value);
+    executeQuery(statement, null, 
+        (data) => {
+            res.set("Connection", "close")
+            res.send(data)
+            res.end()
+        }, (error) => {
+            console.log(error)
+            res.set("Connection", "close")
+            res.send('ok')
+            res.end()
+    })
+})
+
 app.post('/stat', (req, res) => {
     var parameters = [req.body.type, req.body.value, req.body.dateOfOccurance, req.body.nameOfMachine]
     var statement = 'INSERT INTO stats (type, value, dateOfOccurance, nameOfMachine) VALUES (?,?,?,?);'

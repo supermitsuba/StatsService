@@ -30,6 +30,7 @@ export class VmChartComponent implements OnInit {
   ip = "unavailable"
   uptime = "unavailable"
   version = "unavailable"
+  lastTimestamp = "unavailable"
 
   chartOptions = {
     responsive: true
@@ -49,6 +50,10 @@ export class VmChartComponent implements OnInit {
 
     this.service.getMetric(this.name, 'LinuxVersion', '25').subscribe(metric => {
       this.version = metric != null && metric.length > 0 ? metric[metric.length-1].value : "unavailable"
+    });
+
+    this.service.getLastTimestamp(this.name).subscribe(metric => {
+      this.lastTimestamp = metric != null && metric.length > 0 ? metric[0].max : "unavailable"
     });
 
     this.getCPU()
