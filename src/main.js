@@ -320,7 +320,7 @@ module.exports = "span.nobreak {\n  overflow: hidden;\n  text-overflow: ellipsis
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Stats\n  </h1>\n</div>\n\n<mat-tab-group>\n  <mat-tab *ngFor=\"let tab of tabs\" [label]=\"tab\">\n      <app-vm-chart [name]=\"tab\"></app-vm-chart>\n  </mat-tab>\n</mat-tab-group>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Stats\n  </h1>\n  All times in EST\n</div>\n\n<mat-tab-group>\n  <mat-tab *ngFor=\"let tab of tabs\" [label]=\"tab\">\n      <app-vm-chart [name]=\"tab\"></app-vm-chart>\n  </mat-tab>\n</mat-tab-group>\n"
 
 /***/ }),
 
@@ -672,7 +672,7 @@ var VmChartComponent = /** @class */ (function () {
         });
     };
     VmChartComponent.prototype.convertDateTime = function (value) {
-        return _node_modules_moment_min_moment_with_locales__WEBPACK_IMPORTED_MODULE_3__(value).format('lll');
+        return _node_modules_moment_min_moment_with_locales__WEBPACK_IMPORTED_MODULE_3__(value).add(5, 'hours').format('lll');
     };
     VmChartComponent.prototype.onChartClick = function (event) {
         console.log(event);
