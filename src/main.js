@@ -672,7 +672,7 @@ var VmChartComponent = /** @class */ (function () {
         });
     };
     VmChartComponent.prototype.convertDateTime = function (value) {
-        return _node_modules_moment_min_moment_with_locales__WEBPACK_IMPORTED_MODULE_3__(value).add(5, 'hours').format('lll');
+        return _node_modules_moment_min_moment_with_locales__WEBPACK_IMPORTED_MODULE_3__(value).add((new Date().getTimezoneOffset() / 60), 'hours').format('lll');
     };
     VmChartComponent.prototype.onChartClick = function (event) {
         console.log(event);
