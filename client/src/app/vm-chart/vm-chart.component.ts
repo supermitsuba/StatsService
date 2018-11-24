@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MetricDataService } from '../services/metric-data-service.service';
 import { BaseChartDirective } from 'ng2-charts';
+import * as moment from 'Moment';
 
 @Component({
   selector: 'app-vm-chart',
@@ -53,7 +54,7 @@ export class VmChartComponent implements OnInit {
     });
 
     this.service.getLastTimestamp(this.name).subscribe(metric => {
-      this.lastTimestamp = metric != null && metric.length > 0 ? metric[0].max : "unavailable"
+      this.lastTimestamp = metric != null && metric.length > 0 ? this.convertDateTime(metric[0].max) : "unavailable"
     });
 
     this.getCPU()
@@ -68,7 +69,7 @@ export class VmChartComponent implements OnInit {
 
       for(var i = metric.length-1; i >= 0; i--) {
         var item = metric[i]
-        this.cpuLabel.push(item.createdTimestamp.toString())
+        this.cpuLabel.push(this.convertDateTime(item.createdTimestamp))
         tempData.push(item.value.substring(0, item.value.length-1))
       }
 
@@ -86,7 +87,7 @@ export class VmChartComponent implements OnInit {
 
       for(var i = metric.length-1; i >= 0; i--) {
         var item = metric[i]
-        this.numOfProcessLabel.push(item.createdTimestamp.toString())
+        this.numOfProcessLabel.push(this.convertDateTime(item.createdTimestamp))
         tempData.push(item.value)
       }
 
@@ -108,7 +109,7 @@ export class VmChartComponent implements OnInit {
 
         for(var i = cpuMetric.length-1; i >= 0; i--) {
           var item = cpuMetric[i]
-          this.cpuTempLabel.push(item.createdTimestamp.toString())
+          this.cpuTempLabel.push(this.convertDateTime(item.createdTimestamp))
           var cTemp = item.value.split("/")[0];
           var fTemp = item.value.split("/")[1];
           tempData.push(cTemp.substring(0, cTemp.length-2))
@@ -141,7 +142,7 @@ export class VmChartComponent implements OnInit {
 
         for(var i = totalMetric.length-1; i >= 0; i--) {
           var itemTotal = totalMetric[i]
-          this.memoryLabel.push(itemTotal.createdTimestamp.toString())
+          this.memoryLabel.push(this.convertDateTime(itemTotal.createdTimestamp))
           tempTotal.push(itemTotal.value.substring(0, itemTotal.value.length-3))
         }
 
@@ -160,6 +161,9 @@ export class VmChartComponent implements OnInit {
     });
   }
 
+  convertDateTime(value) {
+    return moment(value).add(-(new Date().getTimezoneOffset()/60), 'hours').fromNow()
+  }
 
   onChartClick(event) {
     console.log(event);
