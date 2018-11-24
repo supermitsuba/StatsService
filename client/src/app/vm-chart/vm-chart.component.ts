@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MetricDataService } from '../services/metric-data-service.service';
 import { BaseChartDirective } from 'ng2-charts';
-import * as moment from 'Moment';
+import * as moment from '../../../node_modules/moment/min/moment-with-locales';
 
 @Component({
   selector: 'app-vm-chart',
@@ -162,7 +162,7 @@ export class VmChartComponent implements OnInit {
   }
 
   convertDateTime(value) {
-    return moment(value).add(-(new Date().getTimezoneOffset()/60), 'hours').fromNow()
+    return moment(value).format('lll');
   }
 
   onChartClick(event) {
