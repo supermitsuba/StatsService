@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MetricDataService } from '../services/metric-data-service.service';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-vm-chart',
@@ -9,18 +10,22 @@ import { MetricDataService } from '../services/metric-data-service.service';
 
 export class VmChartComponent implements OnInit {
   @Input() name = "blank"
+  @ViewChild("tempChart") tempChart: BaseChartDirective;
+  @ViewChild("processChart") processChart: BaseChartDirective;
+  @ViewChild("cpuChart") cpuChart: BaseChartDirective;
+  @ViewChild("memoryChart") memoryChart: BaseChartDirective;
 
   cpuData = []
   cpuLabel = []
 
   cpuTempData = []
-  cpuTempLabel = []
+  cpuTempLabel = [ ]
 
-  memoryData = []
-  memoryLabel = []
+  memoryData = [ ]
+  memoryLabel = [ ]
 
-  numOfProcessData = []
-  numOfProcessLabel = []
+  numOfProcessData = [ ]
+  numOfProcessLabel = [ ]
 
   ip = "unavailable"
   uptime = "unavailable"
@@ -30,7 +35,8 @@ export class VmChartComponent implements OnInit {
     responsive: true
   };
 
-  constructor(private service:MetricDataService) { }
+  constructor(private service:MetricDataService) {
+  }
 
   ngOnInit() {
     this.service.getMetric(this.name, 'IP', '25').subscribe(metric => {
@@ -57,11 +63,15 @@ export class VmChartComponent implements OnInit {
 
       for(var i = metric.length-1; i >= 0; i--) {
         var item = metric[i]
-        this.cpuLabel.push(item.createdTimestamp)
+        this.cpuLabel.push(item.createdTimestamp.toString())
         tempData.push(item.value.substring(0, item.value.length-1))
       }
 
       this.cpuData.push({ data:tempData, label:this.name})
+      if(this.cpuChart !== undefined){
+        this.cpuChart.ngOnDestroy();
+        this.cpuChart.chart = this.cpuChart.getChartBuilder(this.cpuChart.ctx);
+      }
     });
   }
 
@@ -71,11 +81,15 @@ export class VmChartComponent implements OnInit {
 
       for(var i = metric.length-1; i >= 0; i--) {
         var item = metric[i]
-        this.numOfProcessLabel.push(item.createdTimestamp)
+        this.numOfProcessLabel.push(item.createdTimestamp.toString())
         tempData.push(item.value)
       }
 
       this.numOfProcessData.push({ data:tempData, label:this.name})
+      if(this.processChart !== undefined){
+        this.processChart.ngOnDestroy();
+        this.processChart.chart = this.processChart.getChartBuilder(this.processChart.ctx);
+      }
     });
   }
 
@@ -85,13 +99,18 @@ export class VmChartComponent implements OnInit {
         var tempData = [];
         var tempGPUData = [];
 
+        if(cpuMetric.length < 1) return;
+
         for(var i = cpuMetric.length-1; i >= 0; i--) {
           var item = cpuMetric[i]
-          this.cpuTempLabel.push(item.createdTimestamp)
+          this.cpuTempLabel.push(item.createdTimestamp.toString())
           var cTemp = item.value.split("/")[0];
           var fTemp = item.value.split("/")[1];
           tempData.push(cTemp.substring(0, cTemp.length-2))
         }
+        this.cpuTempData.push({ data:tempData, label:'CPU Temp'})
+
+        if(gpuMetric.length < 1) return;
 
         for(var i = gpuMetric.length-1; i >= 0; i--) {
           var item = gpuMetric[i]
@@ -100,8 +119,11 @@ export class VmChartComponent implements OnInit {
           tempGPUData.push(cTemp.substring(0, cTemp.length-2))
         }
 
-        this.cpuTempData.push({ data:tempData, label:'CPU Temp'})
         this.cpuTempData.push({ data:tempGPUData, label:'GPU Temp'})
+        if(this.tempChart !== undefined){
+          this.tempChart.ngOnDestroy();
+          this.tempChart.chart = this.tempChart.getChartBuilder(this.tempChart.ctx);
+        }
       });
     });
   }
@@ -114,7 +136,7 @@ export class VmChartComponent implements OnInit {
 
         for(var i = totalMetric.length-1; i >= 0; i--) {
           var itemTotal = totalMetric[i]
-          this.memoryLabel.push(itemTotal.createdTimestamp)
+          this.memoryLabel.push(itemTotal.createdTimestamp.toString())
           tempTotal.push(itemTotal.value.substring(0, itemTotal.value.length-3))
         }
 
@@ -125,6 +147,10 @@ export class VmChartComponent implements OnInit {
 
         this.memoryData.push({ data:tempTotal, label:'Memory Total'})
         this.memoryData.push({ data:tempUsed, label:'Memory Used'})
+        if(this.memoryChart !== undefined){
+          this.memoryChart.ngOnDestroy();
+          this.memoryChart.chart = this.memoryChart.getChartBuilder(this.memoryChart.ctx);
+        }
       });
     });
   }

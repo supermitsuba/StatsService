@@ -7,6 +7,7 @@
     <h2>CPU Load:</h2>
     <canvas
         baseChart
+        #cpuChart="base-chart"
         [chartType]="'line'"
         [datasets]="cpuData"
         [labels]="cpuLabel"
@@ -17,6 +18,7 @@
     <h2>Memory:</h2>
     <canvas
         baseChart
+        #memoryChart="base-chart"
         [chartType]="'line'"
         [datasets]="memoryData"
         [labels]="memoryLabel"
@@ -27,6 +29,7 @@
     <h2>Number of Processes:</h2>
     <canvas
         baseChart
+        #processChart="base-chart"
         [chartType]="'line'"
         [datasets]="numOfProcessData"
         [labels]="numOfProcessLabel"
@@ -37,6 +40,7 @@
     <h2>CPU Temp:</h2>
     <canvas
         baseChart
+        #tempChart="base-chart"
         [chartType]="'line'"
         [datasets]="cpuTempData"
         [labels]="cpuTempLabel"
