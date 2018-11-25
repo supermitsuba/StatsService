@@ -2,3 +2,12 @@ canvas {
   height: 288px;
   width: 576px;
 }
+
+.parent {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.child {
+  flex: 1 1 576px;
+}

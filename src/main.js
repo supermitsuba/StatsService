@@ -320,7 +320,7 @@ module.exports = "span.nobreak {\n  overflow: hidden;\n  text-overflow: ellipsis
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Stats\n  </h1>\n  All times in EST\n</div>\n\n<mat-tab-group>\n  <mat-tab *ngFor=\"let tab of tabs\" [label]=\"tab\">\n      <app-vm-chart [name]=\"tab\"></app-vm-chart>\n  </mat-tab>\n</mat-tab-group>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Stats\n  </h1>\n</div>\n\n<mat-tab-group>\n  <mat-tab *ngFor=\"let tab of tabs\" [label]=\"tab\">\n      <app-vm-chart [name]=\"tab\"></app-vm-chart>\n  </mat-tab>\n</mat-tab-group>\n"
 
 /***/ }),
 
@@ -500,7 +500,7 @@ var MetricDataService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "canvas {\n  height: 288px;\n  width: 576px;\n}\n"
+module.exports = "canvas {\n  height: 288px;\n  width: 576px;\n}\n\n.parent {\n  display: flex;\n  flex-wrap: wrap;\n}\n\n.child {\n  flex: 1 1 576px;\n}\n"
 
 /***/ }),
 
@@ -511,7 +511,7 @@ module.exports = "canvas {\n  height: 288px;\n  width: 576px;\n}\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <div>IP: {{ip}}</div>\n  <div>Uptime: {{uptime}}</div>\n  <div>Version: {{version}}</div>\n  <div>Last heartbeat: {{lastTimestamp}}</div>\n</div>\n<div style=\"width: 40%;\">\n    <h2>CPU Load:</h2>\n    <canvas\n        baseChart\n        #cpuChart=\"base-chart\"\n        [chartType]=\"'line'\"\n        [datasets]=\"cpuData\"\n        [labels]=\"cpuLabel\"\n        [options]=\"chartOptions\"\n        [legend]=\"true\"\n        (chartClick)=\"onChartClick($event)\">\n    </canvas>\n    <h2>Memory:</h2>\n    <canvas\n        baseChart\n        #memoryChart=\"base-chart\"\n        [chartType]=\"'line'\"\n        [datasets]=\"memoryData\"\n        [labels]=\"memoryLabel\"\n        [options]=\"chartOptions\"\n        [legend]=\"true\"\n        (chartClick)=\"onChartClick($event)\">\n    </canvas>\n    <h2>Number of Processes:</h2>\n    <canvas\n        baseChart\n        #processChart=\"base-chart\"\n        [chartType]=\"'line'\"\n        [datasets]=\"numOfProcessData\"\n        [labels]=\"numOfProcessLabel\"\n        [options]=\"chartOptions\"\n        [legend]=\"true\"\n        (chartClick)=\"onChartClick($event)\">\n    </canvas>\n    <h2>CPU Temp:</h2>\n    <canvas\n        baseChart\n        #tempChart=\"base-chart\"\n        [chartType]=\"'line'\"\n        [datasets]=\"cpuTempData\"\n        [labels]=\"cpuTempLabel\"\n        [options]=\"chartOptions\"\n        [legend]=\"true\"\n        (chartClick)=\"onChartClick($event)\">\n    </canvas>\n</div>\n"
+module.exports = "<div>\n  <div>IP: {{ip}}</div>\n  <div>Uptime: {{uptime}}</div>\n  <div>Version: {{version}}</div>\n  <div>Last heartbeat: {{lastTimestamp}}</div>\n</div>\n<div class=\"parent\">\n    <div class=\"child\">\n      <h2>CPU Load:</h2>\n      <canvas\n          baseChart\n          #cpuChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"cpuData\"\n          [labels]=\"cpuLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n\n    <div class=\"child\">\n      <h2>Memory:</h2>\n      <canvas\n          baseChart\n          #memoryChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"memoryData\"\n          [labels]=\"memoryLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n\n    <div class=\"child\">\n      <h2>Number of Processes:</h2>\n      <canvas\n          baseChart\n          #processChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"numOfProcessData\"\n          [labels]=\"numOfProcessLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n\n    <div class=\"child\">\n      <h2>CPU Temp:</h2>\n      <canvas\n          baseChart\n          #tempChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"cpuTempData\"\n          [labels]=\"cpuTempLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n</div>\n"
 
 /***/ }),
 
