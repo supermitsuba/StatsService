@@ -162,8 +162,8 @@ export class VmChartComponent implements OnInit {
   }
 
   convertDateTime(value) {
-
-    return moment(value).add((new Date().getTimezoneOffset()/60), 'hours').format('lll');
+    //.add((new Date().getTimezoneOffset()/60), 'hours')
+    return moment(value).format('lll');
   }
 
   onChartClick(event) {
