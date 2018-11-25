@@ -102,7 +102,6 @@ app.post('/stat', (req, res) => {
         }, (error) => {
             console.log(error)
             res.set("Connection", "close")
-            res.sendStatus(500)
             res.send('ok')
             res.end()
     })
