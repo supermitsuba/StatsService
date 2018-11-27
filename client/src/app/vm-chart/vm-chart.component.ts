@@ -152,7 +152,7 @@ export class VmChartComponent implements OnInit {
         }
 
         this.memoryData.push({ data:tempTotal, label:'Memory Total'})
-        this.memoryData.push({ data:tempUsed, label:'Memory Used'})
+        this.memoryData.push({ data:tempUsed, label:'Memory Available'})
         if(this.memoryChart !== undefined){
           this.memoryChart.ngOnDestroy();
           this.memoryChart.chart = this.memoryChart.getChartBuilder(this.memoryChart.ctx);

@@ -663,7 +663,7 @@ var VmChartComponent = /** @class */ (function () {
                     tempUsed.push(itemTotal.value.substring(0, itemTotal.value.length - 3));
                 }
                 _this.memoryData.push({ data: tempTotal, label: 'Memory Total' });
-                _this.memoryData.push({ data: tempUsed, label: 'Memory Used' });
+                _this.memoryData.push({ data: tempUsed, label: 'Memory Available' });
                 if (_this.memoryChart !== undefined) {
                     _this.memoryChart.ngOnDestroy();
                     _this.memoryChart.chart = _this.memoryChart.getChartBuilder(_this.memoryChart.ctx);

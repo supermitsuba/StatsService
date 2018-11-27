@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Name 
+# Name
 nameOfMachine=""
 
 # url
@@ -10,7 +10,7 @@ url=""
 myTimeStamp=$(date +"%Y-%m-%dT%H:%M:%S")
 jsonTemplate='{ "type":"%s", "value":"%s", "dateOfOccurance":"%s", "nameOfMachine":"%s" }'
 
-memFree="$(grep MemFree /proc/meminfo | awk {'print $2'}) kB"
+memFree="$(grep MemAvailable /proc/meminfo | awk {'print $2'}) kB"
 memFreeData=$(printf "$jsonTemplate" "memFree" "$memFree" "$myTimeStamp" "$nameOfMachine")
 curl --request POST \
      --header "Content-Type: application/json" \
