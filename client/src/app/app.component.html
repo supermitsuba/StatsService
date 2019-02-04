@@ -5,7 +5,7 @@
   </h1>
 </div>
 
-<mat-tab-group>
+<mat-tab-group (selectedTabChange)="onLinkClick($event)">
   <mat-tab *ngFor="let tab of tabs" [label]="tab">
       <app-vm-chart [name]="tab"></app-vm-chart>
   </mat-tab>
