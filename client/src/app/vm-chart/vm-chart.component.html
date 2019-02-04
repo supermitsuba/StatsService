@@ -1,10 +1,11 @@
 <div>
+  <div><button (click)="this.getMetrics()">refresh</button></div>
   <div>IP: {{ip}}</div>
   <div>Uptime: {{uptime}}</div>
   <div>Version: {{version}}</div>
   <div>Last heartbeat: {{lastTimestamp}}</div>
 </div>
-<div class="parent">
+<div class="parent" *ngIf="isChartData">
     <div class="child">
       <h2>CPU Load:</h2>
       <canvas

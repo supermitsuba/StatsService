@@ -16,16 +16,18 @@ export class VmChartComponent implements OnInit {
   @ViewChild("cpuChart") cpuChart: BaseChartDirective;
   @ViewChild("memoryChart") memoryChart: BaseChartDirective;
 
-  cpuData = []
+  isChartData = false;
+
+  cpuData = [{ data:[], label:"" }]
   cpuLabel = []
 
-  cpuTempData = []
+  cpuTempData = [{ data:[], label:"" },{ data:[], label:"" }]
   cpuTempLabel = [ ]
 
-  memoryData = [ ]
+  memoryData = [{ data:[], label:"" },{ data:[], label:"" }]
   memoryLabel = [ ]
 
-  numOfProcessData = [ ]
+  numOfProcessData = [{ data:[], label:"" }]
   numOfProcessLabel = [ ]
 
   ip = "unavailable"
@@ -41,6 +43,11 @@ export class VmChartComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isChartData = false
+  }
+
+  getMetrics() {
+    this.clearCharts();
     this.service.getMetric(this.name, 'IP', '25').subscribe(metric => {
       this.ip = metric != null && metric.length > 0 ? metric[0].value : "unavailable"
     });
@@ -61,6 +68,21 @@ export class VmChartComponent implements OnInit {
     this.getCPUTemp()
     this.getMemory()
     this.getProcesses()
+    this.isChartData = true;
+  }
+
+  clearCharts() {
+    this.cpuData = [{ data:[], label:"" }]
+    this.cpuLabel.length = 0
+
+    this.cpuTempData = [{ data:[], label:"" },{ data:[], label:"" }]
+    this.cpuTempLabel.length = 0
+
+    this.memoryData = [{ data:[], label:"" },{ data:[], label:"" }]
+    this.memoryLabel.length = 0
+
+    this.numOfProcessData = [{ data:[], label:"" }]
+    this.numOfProcessLabel.length = 0
   }
 
   getCPU() {
@@ -73,11 +95,7 @@ export class VmChartComponent implements OnInit {
         tempData.push(item.value.substring(0, item.value.length-1))
       }
 
-      this.cpuData.push({ data:tempData, label:this.name})
-      if(this.cpuChart !== undefined){
-        this.cpuChart.ngOnDestroy();
-        this.cpuChart.chart = this.cpuChart.getChartBuilder(this.cpuChart.ctx);
-      }
+      this.cpuData = [{ data:tempData, label:this.name}]
     });
   }
 
@@ -91,11 +109,7 @@ export class VmChartComponent implements OnInit {
         tempData.push(item.value)
       }
 
-      this.numOfProcessData.push({ data:tempData, label:this.name})
-      if(this.processChart !== undefined){
-        this.processChart.ngOnDestroy();
-        this.processChart.chart = this.processChart.getChartBuilder(this.processChart.ctx);
-      }
+      this.numOfProcessData = [{ data:tempData, label:this.name}]
     });
   }
 
@@ -114,7 +128,6 @@ export class VmChartComponent implements OnInit {
           var fTemp = item.value.split("/")[1];
           tempData.push(cTemp.substring(0, cTemp.length-2))
         }
-        this.cpuTempData.push({ data:tempData, label:'CPU Temp'})
 
         if(gpuMetric.length < 1) return;
 
@@ -125,11 +138,7 @@ export class VmChartComponent implements OnInit {
           tempGPUData.push(cTemp.substring(0, cTemp.length-2))
         }
 
-        this.cpuTempData.push({ data:tempGPUData, label:'GPU Temp'})
-        if(this.tempChart !== undefined){
-          this.tempChart.ngOnDestroy();
-          this.tempChart.chart = this.tempChart.getChartBuilder(this.tempChart.ctx);
-        }
+        this.cpuTempData = [{ data:tempData, label:'CPU Temp'},{ data:tempGPUData, label:'GPU Temp'}]
       });
     });
   }
@@ -151,12 +160,8 @@ export class VmChartComponent implements OnInit {
           tempUsed.push(itemTotal.value.substring(0, itemTotal.value.length-3))
         }
 
-        this.memoryData.push({ data:tempTotal, label:'Memory Total'})
-        this.memoryData.push({ data:tempUsed, label:'Memory Available'})
-        if(this.memoryChart !== undefined){
-          this.memoryChart.ngOnDestroy();
-          this.memoryChart.chart = this.memoryChart.getChartBuilder(this.memoryChart.ctx);
-        }
+        this.memoryData = [{ data:tempTotal, label:'Memory Total'}, { data:tempUsed, label:'Memory Available'}]
+
       });
     });
   }
