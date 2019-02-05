@@ -36,8 +36,29 @@ export class VmChartComponent implements OnInit {
   lastTimestamp = "unavailable"
 
   chartOptions = {
-    responsive: false
-  };
+    responsive: false,
+    scales: {
+      yAxes: [{
+          ticks: {
+            min: 0
+          }
+      }]
+    }
+  }
+
+  cpuOptions = {
+    responsive: false,
+    scales: {
+      yAxes: [{
+          ticks: {
+            steps : 10,
+            stepValue : 10,
+            max : 100,
+            min: 0
+          }
+      }]
+    }
+  }
 
   constructor(private service:MetricDataService) {
   }

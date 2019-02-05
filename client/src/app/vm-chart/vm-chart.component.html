@@ -14,7 +14,7 @@
           [chartType]="'line'"
           [datasets]="cpuData"
           [labels]="cpuLabel"
-          [options]="chartOptions"
+          [options]="cpuOptions"
           [legend]="true"
           (chartClick)="onChartClick($event)">
       </canvas>
@@ -56,7 +56,7 @@
           [chartType]="'line'"
           [datasets]="cpuTempData"
           [labels]="cpuTempLabel"
-          [options]="chartOptions"
+          [options]="cpuOptions"
           [legend]="true"
           (chartClick)="onChartClick($event)">
       </canvas>
