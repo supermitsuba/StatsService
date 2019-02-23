@@ -10,7 +10,7 @@ url=""
 myTimeStamp=$(date +"%Y-%m-%dT%H:%M:%S")
 jsonTemplate='{ "type":"%s", "value":"%s", "dateOfOccurance":"%s", "nameOfMachine":"%s" }'
 
-cpu="$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}')"
+cpu="$(mpstat 1 1 | awk '/^Average/ {print 100-$NF,"%"}')"
 cpuData=$(printf "$jsonTemplate" "CPU" "$cpu" "$myTimeStamp" "$nameOfMachine")
 curl --request POST \
      --header "Content-Type: application/json" \
