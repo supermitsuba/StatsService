@@ -15,6 +15,7 @@ export class VmChartComponent implements OnInit {
   @ViewChild("processChart") processChart: BaseChartDirective;
   @ViewChild("cpuChart") cpuChart: BaseChartDirective;
   @ViewChild("memoryChart") memoryChart: BaseChartDirective;
+  @ViewChild("diskChart") diskChart: BaseChartDirective;
 
   isChartData = false;
 
@@ -26,6 +27,9 @@ export class VmChartComponent implements OnInit {
 
   memoryData = [{ data:[], label:"" },{ data:[], label:"" }]
   memoryLabel = [ ]
+
+  diskData = [{ data:[], label:"" },{ data:[], label:"" }]
+  diskLabel = [ ]
 
   numOfProcessData = [{ data:[], label:"" }]
   numOfProcessLabel = [ ]
@@ -89,6 +93,7 @@ export class VmChartComponent implements OnInit {
     this.getCPUTemp()
     this.getMemory()
     this.getProcesses()
+    this.getDisk()
     this.isChartData = true;
   }
 
@@ -101,6 +106,9 @@ export class VmChartComponent implements OnInit {
 
     this.memoryData = [{ data:[], label:"" },{ data:[], label:"" }]
     this.memoryLabel.length = 0
+
+    this.diskData = [{ data:[], label:"" },{ data:[], label:"" }]
+    this.diskLabel.length = 0
 
     this.numOfProcessData = [{ data:[], label:"" }]
     this.numOfProcessLabel.length = 0
@@ -183,6 +191,28 @@ export class VmChartComponent implements OnInit {
 
         this.memoryData = [{ data:tempTotal, label:'Memory Total'}, { data:tempUsed, label:'Memory Available'}]
 
+      });
+    });
+  }
+
+  getDisk() {
+    this.service.getMetric(this.name, 'disk_used', 25).subscribe(usedMetric => {
+      this.service.getMetric(this.name, 'disk_available', 25).subscribe(availableMetric => {
+        var tempAvailable = [];
+        var tempUsed = [];
+
+        for(var i = availableMetric.length-1; i >= 0; i--) {
+          var itemTotal = availableMetric[i]
+          this.diskLabel.push(this.convertDateTime(itemTotal.createdTimestamp))
+          tempAvailable.push(itemTotal.value.substring(0, itemTotal.value.length-3))
+        }
+
+        for(var i = usedMetric.length-1; i >= 0; i--) {
+          var itemTotal = usedMetric[i]
+          tempUsed.push(itemTotal.value.substring(0, itemTotal.value.length-3))
+        }
+
+        this.diskData = [{ data:tempAvailable, label:'Disk Available'}, { data:tempUsed, label:'Disk Used'}]
       });
     });
   }

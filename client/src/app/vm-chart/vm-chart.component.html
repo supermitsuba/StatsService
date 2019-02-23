@@ -49,6 +49,20 @@
     </div>
 
     <div class="child">
+      <h2>Disk:</h2>
+      <canvas
+          baseChart
+          #diskChart="base-chart"
+          [chartType]="'line'"
+          [datasets]="diskData"
+          [labels]="diskLabel"
+          [options]="chartOptions"
+          [legend]="true"
+          (chartClick)="onChartClick($event)">
+      </canvas>
+    </div>
+
+    <div class="child">
       <h2>CPU Temp:</h2>
       <canvas
           baseChart

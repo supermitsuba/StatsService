@@ -320,7 +320,7 @@ module.exports = "span.nobreak {\n  overflow: hidden;\n  text-overflow: ellipsis
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Stats\n  </h1>\n</div>\n\n<mat-tab-group>\n  <mat-tab *ngFor=\"let tab of tabs\" [label]=\"tab\">\n      <app-vm-chart [name]=\"tab\"></app-vm-chart>\n  </mat-tab>\n</mat-tab-group>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Stats\n  </h1>\n</div>\n\n<mat-tab-group (selectedTabChange)=\"onLinkClick($event)\">\n  <mat-tab *ngFor=\"let tab of tabs\" [label]=\"tab\">\n      <app-vm-chart [name]=\"tab\"></app-vm-chart>\n  </mat-tab>\n</mat-tab-group>\n"
 
 /***/ }),
 
@@ -336,6 +336,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_metric_data_service_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/metric-data-service.service */ "./src/app/services/metric-data-service.service.ts");
+/* harmony import */ var _vm_chart_vm_chart_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vm-chart/vm-chart.component */ "./src/app/vm-chart/vm-chart.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -345,6 +346,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 var AppComponent = /** @class */ (function () {
@@ -360,8 +362,23 @@ var AppComponent = /** @class */ (function () {
             for (var i = 0; i < computerNames.length; i++) {
                 _this.tabs.push(computerNames[i].nameOfMachine);
             }
+            _this.refreshChart(0);
         });
     };
+    AppComponent.prototype.onLinkClick = function (event) {
+        console.log('event => ', event);
+        console.log('index => ', event.index);
+        console.log('tab => ', event.tab);
+        this.refreshChart(event.index);
+    };
+    AppComponent.prototype.refreshChart = function (index) {
+        var chart = this._childrenCharts.toArray()[index]; //_results[index]
+        chart.getMetrics();
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChildren"])(_vm_chart_vm_chart_component__WEBPACK_IMPORTED_MODULE_2__["VmChartComponent"]),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["QueryList"])
+    ], AppComponent.prototype, "_childrenCharts", void 0);
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
@@ -511,7 +528,7 @@ module.exports = "canvas {\n  height: 288px;\n  width: 576px;\n}\n\n.parent {\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <div>IP: {{ip}}</div>\n  <div>Uptime: {{uptime}}</div>\n  <div>Version: {{version}}</div>\n  <div>Last heartbeat: {{lastTimestamp}}</div>\n</div>\n<div class=\"parent\">\n    <div class=\"child\">\n      <h2>CPU Load:</h2>\n      <canvas\n          baseChart\n          #cpuChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"cpuData\"\n          [labels]=\"cpuLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n\n    <div class=\"child\">\n      <h2>Memory:</h2>\n      <canvas\n          baseChart\n          #memoryChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"memoryData\"\n          [labels]=\"memoryLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n\n    <div class=\"child\">\n      <h2>Number of Processes:</h2>\n      <canvas\n          baseChart\n          #processChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"numOfProcessData\"\n          [labels]=\"numOfProcessLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n\n    <div class=\"child\">\n      <h2>CPU Temp:</h2>\n      <canvas\n          baseChart\n          #tempChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"cpuTempData\"\n          [labels]=\"cpuTempLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n</div>\n"
+module.exports = "<div>\n  <div><button (click)=\"this.getMetrics()\">refresh</button></div>\n  <div>IP: {{ip}}</div>\n  <div>Uptime: {{uptime}}</div>\n  <div>Version: {{version}}</div>\n  <div>Last heartbeat: {{lastTimestamp}}</div>\n</div>\n<div class=\"parent\" *ngIf=\"isChartData\">\n    <div class=\"child\">\n      <h2>CPU Load:</h2>\n      <canvas\n          baseChart\n          #cpuChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"cpuData\"\n          [labels]=\"cpuLabel\"\n          [options]=\"cpuOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n\n    <div class=\"child\">\n      <h2>Memory:</h2>\n      <canvas\n          baseChart\n          #memoryChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"memoryData\"\n          [labels]=\"memoryLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n\n    <div class=\"child\">\n      <h2>Number of Processes:</h2>\n      <canvas\n          baseChart\n          #processChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"numOfProcessData\"\n          [labels]=\"numOfProcessLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n\n    <div class=\"child\">\n      <h2>Disk:</h2>\n      <canvas\n          baseChart\n          #diskChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"diskData\"\n          [labels]=\"diskLabel\"\n          [options]=\"chartOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n\n    <div class=\"child\">\n      <h2>CPU Temp:</h2>\n      <canvas\n          baseChart\n          #tempChart=\"base-chart\"\n          [chartType]=\"'line'\"\n          [datasets]=\"cpuTempData\"\n          [labels]=\"cpuTempLabel\"\n          [options]=\"cpuOptions\"\n          [legend]=\"true\"\n          (chartClick)=\"onChartClick($event)\">\n      </canvas>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -548,24 +565,51 @@ var VmChartComponent = /** @class */ (function () {
     function VmChartComponent(service) {
         this.service = service;
         this.name = "blank";
-        this.cpuData = [];
+        this.isChartData = false;
+        this.cpuData = [{ data: [], label: "" }];
         this.cpuLabel = [];
-        this.cpuTempData = [];
+        this.cpuTempData = [{ data: [], label: "" }, { data: [], label: "" }];
         this.cpuTempLabel = [];
-        this.memoryData = [];
+        this.memoryData = [{ data: [], label: "" }, { data: [], label: "" }];
         this.memoryLabel = [];
-        this.numOfProcessData = [];
+        this.diskData = [{ data: [], label: "" }, { data: [], label: "" }];
+        this.diskLabel = [];
+        this.numOfProcessData = [{ data: [], label: "" }];
         this.numOfProcessLabel = [];
         this.ip = "unavailable";
         this.uptime = "unavailable";
         this.version = "unavailable";
         this.lastTimestamp = "unavailable";
         this.chartOptions = {
-            responsive: false
+            responsive: false,
+            scales: {
+                yAxes: [{
+                        ticks: {
+                            min: 0
+                        }
+                    }]
+            }
+        };
+        this.cpuOptions = {
+            responsive: false,
+            scales: {
+                yAxes: [{
+                        ticks: {
+                            steps: 10,
+                            stepValue: 10,
+                            max: 100,
+                            min: 0
+                        }
+                    }]
+            }
         };
     }
     VmChartComponent.prototype.ngOnInit = function () {
+        this.isChartData = false;
+    };
+    VmChartComponent.prototype.getMetrics = function () {
         var _this = this;
+        this.clearCharts();
         this.service.getMetric(this.name, 'IP', '25').subscribe(function (metric) {
             _this.ip = metric != null && metric.length > 0 ? metric[0].value : "unavailable";
         });
@@ -582,6 +626,20 @@ var VmChartComponent = /** @class */ (function () {
         this.getCPUTemp();
         this.getMemory();
         this.getProcesses();
+        this.getDisk();
+        this.isChartData = true;
+    };
+    VmChartComponent.prototype.clearCharts = function () {
+        this.cpuData = [{ data: [], label: "" }];
+        this.cpuLabel.length = 0;
+        this.cpuTempData = [{ data: [], label: "" }, { data: [], label: "" }];
+        this.cpuTempLabel.length = 0;
+        this.memoryData = [{ data: [], label: "" }, { data: [], label: "" }];
+        this.memoryLabel.length = 0;
+        this.diskData = [{ data: [], label: "" }, { data: [], label: "" }];
+        this.diskLabel.length = 0;
+        this.numOfProcessData = [{ data: [], label: "" }];
+        this.numOfProcessLabel.length = 0;
     };
     VmChartComponent.prototype.getCPU = function () {
         var _this = this;
@@ -592,11 +650,7 @@ var VmChartComponent = /** @class */ (function () {
                 _this.cpuLabel.push(_this.convertDateTime(item.createdTimestamp));
                 tempData.push(item.value.substring(0, item.value.length - 1));
             }
-            _this.cpuData.push({ data: tempData, label: _this.name });
-            if (_this.cpuChart !== undefined) {
-                _this.cpuChart.ngOnDestroy();
-                _this.cpuChart.chart = _this.cpuChart.getChartBuilder(_this.cpuChart.ctx);
-            }
+            _this.cpuData = [{ data: tempData, label: _this.name }];
         });
     };
     VmChartComponent.prototype.getProcesses = function () {
@@ -608,11 +662,7 @@ var VmChartComponent = /** @class */ (function () {
                 _this.numOfProcessLabel.push(_this.convertDateTime(item.createdTimestamp));
                 tempData.push(item.value);
             }
-            _this.numOfProcessData.push({ data: tempData, label: _this.name });
-            if (_this.processChart !== undefined) {
-                _this.processChart.ngOnDestroy();
-                _this.processChart.chart = _this.processChart.getChartBuilder(_this.processChart.ctx);
-            }
+            _this.numOfProcessData = [{ data: tempData, label: _this.name }];
         });
     };
     VmChartComponent.prototype.getCPUTemp = function () {
@@ -630,7 +680,6 @@ var VmChartComponent = /** @class */ (function () {
                     var fTemp = item.value.split("/")[1];
                     tempData.push(cTemp.substring(0, cTemp.length - 2));
                 }
-                _this.cpuTempData.push({ data: tempData, label: 'CPU Temp' });
                 if (gpuMetric.length < 1)
                     return;
                 for (var i = gpuMetric.length - 1; i >= 0; i--) {
@@ -639,11 +688,7 @@ var VmChartComponent = /** @class */ (function () {
                     var fTemp = item.value.split("/")[1];
                     tempGPUData.push(cTemp.substring(0, cTemp.length - 2));
                 }
-                _this.cpuTempData.push({ data: tempGPUData, label: 'GPU Temp' });
-                if (_this.tempChart !== undefined) {
-                    _this.tempChart.ngOnDestroy();
-                    _this.tempChart.chart = _this.tempChart.getChartBuilder(_this.tempChart.ctx);
-                }
+                _this.cpuTempData = [{ data: tempData, label: 'CPU Temp' }, { data: tempGPUData, label: 'GPU Temp' }];
             });
         });
     };
@@ -662,12 +707,26 @@ var VmChartComponent = /** @class */ (function () {
                     var itemTotal = freeMetric[i];
                     tempUsed.push(itemTotal.value.substring(0, itemTotal.value.length - 3));
                 }
-                _this.memoryData.push({ data: tempTotal, label: 'Memory Total' });
-                _this.memoryData.push({ data: tempUsed, label: 'Memory Available' });
-                if (_this.memoryChart !== undefined) {
-                    _this.memoryChart.ngOnDestroy();
-                    _this.memoryChart.chart = _this.memoryChart.getChartBuilder(_this.memoryChart.ctx);
+                _this.memoryData = [{ data: tempTotal, label: 'Memory Total' }, { data: tempUsed, label: 'Memory Available' }];
+            });
+        });
+    };
+    VmChartComponent.prototype.getDisk = function () {
+        var _this = this;
+        this.service.getMetric(this.name, 'disk_used', 25).subscribe(function (usedMetric) {
+            _this.service.getMetric(_this.name, 'disk_available', 25).subscribe(function (availableMetric) {
+                var tempAvailable = [];
+                var tempUsed = [];
+                for (var i = availableMetric.length - 1; i >= 0; i--) {
+                    var itemTotal = availableMetric[i];
+                    _this.diskLabel.push(_this.convertDateTime(itemTotal.createdTimestamp));
+                    tempAvailable.push(itemTotal.value.substring(0, itemTotal.value.length - 3));
                 }
+                for (var i = usedMetric.length - 1; i >= 0; i--) {
+                    var itemTotal = usedMetric[i];
+                    tempUsed.push(itemTotal.value.substring(0, itemTotal.value.length - 3));
+                }
+                _this.diskData = [{ data: tempAvailable, label: 'Disk Available' }, { data: tempUsed, label: 'Disk Used' }];
             });
         });
     };
@@ -698,6 +757,10 @@ var VmChartComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])("memoryChart"),
         __metadata("design:type", ng2_charts__WEBPACK_IMPORTED_MODULE_2__["BaseChartDirective"])
     ], VmChartComponent.prototype, "memoryChart", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])("diskChart"),
+        __metadata("design:type", ng2_charts__WEBPACK_IMPORTED_MODULE_2__["BaseChartDirective"])
+    ], VmChartComponent.prototype, "diskChart", void 0);
     VmChartComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-vm-chart',
